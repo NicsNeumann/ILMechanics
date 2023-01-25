@@ -14,8 +14,9 @@ namespace MyScope
     {
         static void Main(string[] args)
         {   
-            // Create an assembly builder by passing a name and version descriptor. 
-            var descriptor = AssemblyDescriptor.Create("ILAssembly", new Version(1, 0, 0, 0));
+            // Create an assembly builder by passing a name, version and runtime lib descriptor.
+            var runtimeLib = new AssemblyName("System.Runtime, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null");
+            var descriptor = AssemblyDescriptor.Create("ILAssembly", new Version(1, 0, 0, 0), runtimeLib);
             var builder = AssemblyBuilder.Create(descriptor);
 
             // Get the underlying assembly.
