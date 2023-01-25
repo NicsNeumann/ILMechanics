@@ -32,7 +32,7 @@ namespace MyScope
             var mth = type.AddMethod(AssemblyBuilder.Ctor, AccessModifiers.Public, ILSignature.Void());
             mth.DefaultConstructor();
 
-            // Resolve all entities and emit the assembly to the specified path.
+            // Resolve all entities and emit the assembly to the specified path. The path is without the file name and extension.
             builder.Resolve();
             dyn.Emit(@"X:/.../path/to/file");
         }
