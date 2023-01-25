@@ -15,7 +15,7 @@ namespace MyScope
         static void Main(string[] args)
         {   
             // Create an assembly builder by passing a name and version descriptor. 
-            var descriptor = AssemblyDescriptor.Create("Laplace", new Version(1, 0, 0, 0));
+            var descriptor = AssemblyDescriptor.Create("ILAssembly", new Version(1, 0, 0, 0));
             var builder = AssemblyBuilder.Create(descriptor);
 
             // Get the underlying assembly.
