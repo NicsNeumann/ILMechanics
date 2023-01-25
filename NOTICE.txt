@@ -10,3 +10,7 @@ The following section lists the project dependencies and its licences and are pr
 - System.Collections.Immutable
  - Path: (https://www.nuget.org/packages/System.Collections.Immutable)
  - Licence: https://dotnet.microsoft.com/en-us/dotnet_library_license.htm
+ 
+- System.Text.Json
+ - Path: (https://www.nuget.org/packages/System.Text.Json)
+ - Licence: https://dotnet.microsoft.com/en-us/dotnet_library_license.htm
