@@ -1,0 +1,12 @@
+ILMechanics uses third-party libraries that may be
+distributed under licenses different than the ILMechanics library.
+
+The following section lists the project dependencies and its licences and are provided for information only:
+
+- System.Reflection.Metadata
+ - Path: (https://www.nuget.org/packages/System.Reflection.Metadata)
+ - Licence: https://dotnet.microsoft.com/en-us/dotnet_library_license.htm
+
+- System.Collections.Immutable.dll
+ - Path: (https://www.nuget.org/packages/System.Collections.Immutable.dll)
+ - Licence: https://dotnet.microsoft.com/en-us/dotnet_library_license.htm
