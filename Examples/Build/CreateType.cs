@@ -14,7 +14,7 @@ namespace MyScope
     {
         static void Main(string[] args)
         {   
-DynamicAssembly dyn = new DynamicAssembly("MyAssembly", new Version(1, 0, 0, 0));
+            DynamicAssembly dyn = new DynamicAssembly("MyAssembly", new Version(1, 0, 0, 0));
 
             // Store the runtime lib, which contains .NET fundamental types.
             ILMechanics.Entities.AssemblyReference rt = dyn.StoreAssemblyReference("System.Runtime", new Version(7, 0, 0, 0));
