@@ -14,27 +14,47 @@ namespace MyScope
     {
         static void Main(string[] args)
         {   
-            // Create an assembly builder by passing a name, version and runtime lib descriptor.
-            var runtimeLib = new AssemblyName("System.Runtime, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null");
-            var descriptor = AssemblyDescriptor.Create("ILAssembly", new Version(1, 0, 0, 0), runtimeLib);
-            var builder = AssemblyBuilder.Create(descriptor);
+DynamicAssembly dyn = new DynamicAssembly("MyAssembly", new Version(1, 0, 0, 0));
 
-            // Get the underlying assembly.
-            var dyn = builder.Assembly;
+            // Store the runtime lib, which contains .NET fundamental types.
+            ILMechanics.Entities.AssemblyReference rt = dyn.StoreAssemblyReference("System.Runtime", new Version(7, 0, 0, 0));
+            rt.PublicKey = new byte[] { 0xb0, 0x3f, 0x5f, 0x7f, 0x11, 0xd5, 0x0a, 0x3a };
 
-            // Set the namespace where the type will be defined.
-            builder.CurrentNamespace = "ILExample";
+            // Store a reference of System.Object or simply object.
+            ILTypeReference obj = dyn.StoreTypeReference("System", "Object", rt);
 
-            // Create a new public class.
-            var type = builder.ClassBuilder("ILClass", AccessModifiers.Public);
+            // Store constructor method of System.Object.
+            ILMemberReference objCtor = dyn.StoreMemberReference(".ctor", ILSignature.Void(), obj);
 
-            // Add a method to the class and mark it as the default constructor.
-            var mth = type.AddMethod(AssemblyBuilder.Ctor, AccessModifiers.Public, ILSignature.Void());
-            mth.DefaultConstructor();
+            // Define the type by providing the name and namespace.
+            ILType type = dyn.DefineType("MyClass", "MyNamespace");
 
-            // Resolve all entities and emit the assembly to the specified path.
-            builder.Resolve();
-            File.WriteAllBytes(@"X:/../../ILAssembly.dll", dyn.Emit());
+            // Define the type attributes.
+            type.Attributes = TypeAttributes.Public | TypeAttributes.AnsiClass | TypeAttributes.BeforeFieldInit;
+
+            // Set the base type to `object`.
+            type.BaseType = obj.ReferenceSignature();
+
+            // Define the method by indicating the type that defines it.
+            ILMethod constructor = dyn.DefineMethod(type);
+
+            // Assign the name and attributes for constructors.
+            constructor.Name = ".ctor";
+            constructor.Attributes = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName | MethodAttributes.HideBySig;
+
+            // Set the return type, which in constructors is always `void`.
+            constructor.ReturnType = ILSignature.Void();
+
+            // Set the body.
+            constructor.SetBody(
+                InstructionBuilder.IL(ILOpCode.Ldarg_0),
+                InstructionBuilder.IL(ILOpCode.Call, objCtor.ReferenceSignature()),
+                InstructionBuilder.IL(ILOpCode.Ret)
+                );
+
+            byte[] file = dyn.Emit();
+
+            File.WriteAllBytes(@"C:\Users\nicog\source\repos\Draft\Draft\ILAssembly.dll", file);
         }
     }
 }
