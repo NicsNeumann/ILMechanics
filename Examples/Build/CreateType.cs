@@ -54,7 +54,7 @@ namespace MyScope
 
             byte[] file = dyn.Emit();
 
-            File.WriteAllBytes(@"C:\Users\nicog\source\repos\Draft\Draft\ILAssembly.dll", file);
+            File.WriteAllBytes(@"/path/to/file/AssemblyName.dll", file);
         }
     }
 }
